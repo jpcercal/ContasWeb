@@ -1,0 +1,77 @@
+{% extends 'CekurteGeneratorBundle::layout.html.twig' %}
+
+{% set title    = 'Conta'|trans %}
+{% set subtitle = 'List'|trans %}
+
+{% block search -%}
+    {% include 'CekurteHomeAdminBundle:Conta:search.html.twig' %}
+{% endblock %}
+
+{% block links -%}
+    {% embed 'CekurteGeneratorBundle:Action:search.html.twig' only %}
+    {% endembed %}
+    {% embed 'CekurteGeneratorBundle:Action:create.html.twig' with {
+        'route': 'conta_new'
+    } only %}
+    {% endembed %}
+    {% embed 'CekurteGeneratorBundle:Action:export.html.twig' with {
+        'route': 'conta_export'
+    } only %}
+    {% endembed %}
+{% endblock %}
+
+{% block links_footer -%}
+    {{ knp_pagination_render(pagination) }}
+{% endblock %}
+
+{% block content -%}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th{% if pagination.isSorted('ck.id') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Id'|trans, 'ck.id', {'title' : 'Order by'|trans ~ ' ' ~ 'Id'|trans}) }}</th>
+                    <th{% if pagination.isSorted('ck.tipoDespesa') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Tipodespesa'|trans, 'ck.tipoDespesa', {'title' : 'Order by'|trans ~ ' ' ~ 'Tipodespesa'|trans}) }}</th>
+                    <th{% if pagination.isSorted('ck.formaPagamento') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Formapagamento'|trans, 'ck.formaPagamento', {'title' : 'Order by'|trans ~ ' ' ~ 'Formapagamento'|trans}) }}</th>
+                    <th{% if pagination.isSorted('ck.conta') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Conta'|trans, 'ck.conta', {'title' : 'Order by'|trans ~ ' ' ~ 'Conta'|trans}) }}</th>
+                    <th{% if pagination.isSorted('ck.valor') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Valor'|trans, 'ck.valor', {'title' : 'Order by'|trans ~ ' ' ~ 'Valor'|trans}) }}</th>
+                    <th{% if pagination.isSorted('ck.data') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Data'|trans, 'ck.data', {'title' : 'Order by'|trans ~ ' ' ~ 'Data'|trans}) }}</th>
+                    <th{% if pagination.isSorted('ck.createdAt') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Sincronizado'|trans, 'ck.createdAt', {'title' : 'Order by'|trans ~ ' ' ~ 'Sincronizado'|trans}) }}</th>
+                    {% if cekurte_is_granted('RETRIEVE') or cekurte_is_granted('UPDATE') or cekurte_is_granted('DELETE') %}
+                        <th class="action">{{ 'Actions'|trans }}</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in pagination %}
+                <tr>
+                    <td><a href="{{ path('conta_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                    <td>{{ entity.tipoDespesa }}</td>
+                    <td>{{ entity.formaPagamento }}</td>
+                    <td>{{ entity.conta }}</td>
+                    <td>{{ entity.valor }}</td><td>{{ entity.data|date('d/m/Y H:i:s') }}</td><td>{{ entity.createdAt|date('d/m/Y H:i:s') }}</td>
+                    {% if cekurte_is_granted('RETRIEVE') or cekurte_is_granted('UPDATE') or cekurte_is_granted('DELETE') %}
+                        <td>
+                            {% embed 'CekurteGeneratorBundle:Action:retrieve.html.twig' with {
+                                'id'    : entity.id,
+                                'route' : 'conta_show'
+                            } only %}
+                            {% endembed  %}
+                            {% embed 'CekurteGeneratorBundle:Action:update.html.twig' with {
+                                'id'    : entity.id,
+                                'route' : 'conta_edit'
+                            } only %}
+                            {% endembed  %}
+                            {% embed 'CekurteGeneratorBundle:Action:delete.html.twig' with {
+                                'form'  : delete_form,
+                                'id'    : entity.id,
+                                'route' : 'conta_delete'
+                            } only %}
+                            {% endembed  %}
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

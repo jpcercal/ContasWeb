@@ -1,0 +1,65 @@
+<?php
+
+namespace Cekurte\Home\AdminBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Conta
+ *
+ * @ORM\Table(name="conta")
+ * @ORM\Entity
+ */
+class Conta
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tipo_despesa", type="string", length=255)
+     */
+    private $tipoDespesa;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="forma_pagamento", type="string", length=255)
+     */
+    private $formaPagamento;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="conta", type="string", length=255)
+     */
+    private $conta;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="valor", type="string", length=255)
+     */
+    private $valor;
+
+    /**
+     * @var \Datetime
+     *
+     * @ORM\Column(name="data", type="datetime", length=255)
+     */
+    private $data;
+
+    /**
+     * @var \Datetime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+}

@@ -1,0 +1,24 @@
+{% extends 'CekurteGeneratorBundle::layout.html.twig' %}
+
+{% set title    = 'Conta'|trans %}
+{% set subtitle = 'Add'|trans %}
+
+{% block links -%}
+    {% embed 'CekurteGeneratorBundle:Action:list.html.twig' with {
+        'route' : 'conta'
+    } only %}
+    {% endembed %}
+{% endblock %}
+
+{% block content -%}
+    <form class="form-horizontal" role="form" action="{{ path('conta_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        {% include 'CekurteGeneratorBundle:Action:form-actions.html.twig' %}
+    </form>
+                            
+{% endblock %}
+
+{%- block javascripts -%}
+    {{ parent() }}
+                            
+{%- endblock -%}
